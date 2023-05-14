@@ -1,0 +1,14 @@
+﻿@using (Html.BeginForm("Endereco", "Home", FormMethod.Get))
+{
+    <input type="text" name="address" placeholder="Enter address" />
+    <button type="submit">Convert</button>
+}
+
+    <p>Latitude: @ViewBag.Latitude</p>
+    <p>Longitude: @ViewBag.Longitude</p>
+
+    
+    <p>@ViewBag.ErrorMessage</p>
+
+
+
