@@ -25,7 +25,6 @@ namespace AiderHub
             {
                 var content = response.Content;
                 var results = JsonConvert.DeserializeObject<List<OpenStreetMapResponse>>(content);
-
                 if (results.Count > 0)
                 {
                     var result = results[0];

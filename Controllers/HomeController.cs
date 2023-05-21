@@ -7,6 +7,8 @@ using RestSharp;
 using Nominatim.API.Geocoders;
 using System.Diagnostics;
 
+using Microsoft.Office.Interop.Excel;
+
 namespace AiderHub.Controllers
 {
     public class HomeController : Controller
@@ -54,8 +56,48 @@ namespace AiderHub.Controllers
                 // não achou / deu erro
                 ViewBag.ErrorMessage = "Address not found.";
             }
-
             return View();
         }
+
+        [HttpPost]
+        public ActionResult ExecutaMacro()
+        {
+            string caminho = Server.MapPath("~/Models/MacroCertificado.xlsm");
+
+            Application xlApp = new Application();
+
+            if (xlApp == null)
+            {
+                ViewBag.Mensagem = "Erro ao executar a macro: aplicativo Excel não encontrado.";
+                return View("Relatorio");
+            }
+
+            Workbook xlWorkbook = xlApp.Workbooks.Open(caminho, ReadOnly: false);
+
+            try
+            {
+                xlApp.Visible = false;
+                xlApp.Run("GerarCertificado");
+            }
+            catch (System.Exception)
+            {
+                ViewBag.Mensagem = "Erro ao executar a macro.";
+                return View("Relatorio");
+            }
+
+            xlWorkbook.Close(false);
+            xlApp.Application.Quit();
+            xlApp.Quit();
+
+
+            ViewBag.Mensagem = "Arquivo gerado com sucesso!";
+            return View("Relatorio");
+        }
+
+        public ActionResult Relatorio()
+        {
+            return View();
+        }
+
     }
 }
