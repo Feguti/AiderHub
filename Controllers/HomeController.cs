@@ -43,11 +43,16 @@ namespace AiderHub.Controllers
         {
             Coordinates coordinates = _openStreetMapService.GetCoordinates(address);
 
+            ViewBag.Address = address;
+
             if (coordinates != null)
             {
                 // achou as coordenadas
                 ViewBag.Latitude = coordinates.Latitude;
                 ViewBag.Longitude = coordinates.Longitude;
+
+                // não funciona dessa maneira
+                ViewBag.Coordinates = coordinates;
 
                 Debug.WriteLine(message: $"Latitude: {coordinates.Latitude}, Longitude: {coordinates.Longitude}");
             }

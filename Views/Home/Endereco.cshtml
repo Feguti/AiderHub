@@ -1,14 +1,47 @@
 ﻿@using (Html.BeginForm("Endereco", "Home", FormMethod.Get))
 {
-    <input type="text" name="address" placeholder="Enter address" />
-    <button type="submit">Convert</button>
+<br />
+<input type="text" name="address" placeholder="Endereço..." autocomplete="on" />
+<button type="submit">Convert</button>
 }
 
-    <p>Latitude: @ViewBag.Latitude</p>
-    <p>Longitude: @ViewBag.Longitude</p>
+@{
+    string address = ViewBag.Address;
+    double? latitude = ViewBag.Latitude;
+    double? longitude = ViewBag.Longitude;
+}
 
-    
-    <p>@ViewBag.ErrorMessage</p>
+@if (!string.IsNullOrEmpty(address))
+{
+
+    <h3>Endereço: @address</h3>
+    if (latitude.HasValue && longitude.HasValue)
+    {
+        <p>Latitude: @ViewBag.Latitude</p>
+        <p>Longitude: @ViewBag.Longitude</p>
+    }
+    else
+    {
+        <br />
+        <p>Coordenadas não encontradas.</p>
+    }
+}
+else
+{
+<br />
+<p>Nenhum endereço foi digitado.</p>
+}
+
+
+<!-- 
+<p>Latitude: @ViewBag.Latitude</p>
+<p>Longitude: @ViewBag.Longitude</p>
+<br />
+<!-- não funciona dessa maneira 
+<p>Coordenadas na mesma string: @ViewBag.Coordenadas</p>
+
+<p>@ViewBag.ErrorMessage</p>
+-->
 
 
 
